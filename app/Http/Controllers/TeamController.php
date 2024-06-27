@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeamRequest;
 use App\Models\Team;
 use Illuminate\Http\Request;
 
@@ -12,31 +13,23 @@ class TeamController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Team::paginate());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TeamRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Team $team)
-    {
-        //
+        return response()->json(Team::create($request->validated()));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Team $team)
+    public function update(TeamRequest $request, Team $team)
     {
-        //
+        return response()->json($team->update($request->validated()));
     }
 
     /**
@@ -44,6 +37,6 @@ class TeamController extends Controller
      */
     public function destroy(Team $team)
     {
-        //
+        return response()->json($team->delete());
     }
 }
