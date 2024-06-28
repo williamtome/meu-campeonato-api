@@ -27,10 +27,19 @@ class RoundController extends Controller
 
         $roundFunctionName = $round->getRoundFunctionName();
 
-        $this->roundService->$roundFunctionName($round);
+        DB::beginTransaction();
+
+        try {
+            $this->roundService->$roundFunctionName($round);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
 
         return response()->json([
-            'message' => 'Etapa das qurtas de final iniciada com sucesso.'
+            'message' => 'Etapa da(s)' . $round->name . ' de final iniciada com sucesso.'
         ]);
     }
 
