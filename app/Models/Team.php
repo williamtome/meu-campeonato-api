@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\TeamEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -34,5 +35,15 @@ class Team extends Model
     public function losses(): HasMany
     {
         return $this->hasMany(Result::class, 'loser_id');
+    }
+
+    public static function lessThanEightTeams(): bool
+    {
+        return self::all()->count() < TeamEnum::LIMIT_TO_REGISTER->value;
+    }
+
+    public static function greaterThanEightTeams(): bool
+    {
+        return self::all()->count() > TeamEnum::LIMIT_TO_REGISTER->value;
     }
 }
