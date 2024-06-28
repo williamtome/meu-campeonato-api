@@ -16,7 +16,7 @@ class Round extends Model
     public const SEMIFINAL = 2;
     public const FINAL = 3;
 
-    public function getRoundFunctionName()
+    public function getRoundFunctionName(): string
     {
         $rounds = [
             self::QUARTER_FINALS => 'startQuarterfinals',
@@ -29,6 +29,22 @@ class Round extends Model
 
     public function matches(): HasMany
     {
-        return $this->hasMany(MatchGame::class);
+        return $this->hasMany(MatchGame::class)
+            ->with([
+                'team1',
+                'team2',
+                'result.winner',
+                'result.loser'
+            ]);
+    }
+
+    public function isStarted(): bool
+    {
+        return (bool) $this->started;
+    }
+
+    public function isFinished(): bool
+    {
+        return (bool) $this->finished;
     }
 }
