@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class MatchGame extends Model
 {
@@ -32,8 +33,8 @@ class MatchGame extends Model
         return $this->belongsTo(Team::class, 'team2_id');
     }
 
-//    public function result()
-//    {
-//        return $this->hasOne(Result::class);
-//    }
+    public function result(): HasOne
+    {
+        return $this->hasOne(Result::class, 'match_id');
+    }
 }
