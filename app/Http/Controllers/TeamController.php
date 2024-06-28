@@ -29,7 +29,9 @@ class TeamController extends Controller
      */
     public function update(TeamRequest $request, Team $team)
     {
-        return response()->json($team->update($request->validated()));
+        $team->update($request->validated());
+
+        return response()->json($team);
     }
 
     /**
